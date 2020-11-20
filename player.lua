@@ -9,15 +9,9 @@ function Player:Init(x, y)
 
     print(frames[1].width)
 
-    for index, data in ipairs(frames) do
-        print(index)
     
-        for key, value in pairs(data) do
-            print('\t', key, value)
-        end
-    end
     --local _player = Entity:CreateEntity(x, y, "stickMan") -- 
-    local _player = Entity:CreateAnimatedEntity(x, y, frames) -- our new object
+    local _player = Entity:CreateAnimatedEntity(x, y, frames, 400) -- our new object
     setmetatable(_player, Player)
 
     _player.speed = 1
@@ -118,6 +112,14 @@ function Player:Update(timeDelta, pressedKeys)
     
     self.x = self.x + self.dx
     self.y = self.y + self.dy
+
+    if(self.dx == 0 and self.dy == 0) then
+        self.animate = false
+    else
+        self.animate = true
+    end
+
+    Entity:AnimateEntity(self, timeDelta)
 end
 
 function Player:Draw(offsetX, offsetY)
