@@ -29,6 +29,8 @@ function Entity:CreateAnimatedEntity(x, y, frames)
     -- use the created entity method for getting started
     local entity Entity:CreateEntity(x, y)
 
+    print("Inside Entity")
+    print(frames[1].spriteIDs)
     -- since there was no sprite name, we need to reconfigure the data by hand
     entity.spriteData = frames[1]
 

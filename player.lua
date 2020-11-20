@@ -3,10 +3,21 @@ Player.__index = Player
 
 function Player:Init(x, y)
     local frames = {
-        _G["stickMan"]
+        _G["animMan1"],
+        _G["animMan2"]
     }
 
-    local _player = Entity:CreateEntity(x, y, "stickMan") -- CreateAnimatedEntity(x, y, frames) -- our new object
+    print(frames[1].width)
+
+    for index, data in ipairs(frames) do
+        print(index)
+    
+        for key, value in pairs(data) do
+            print('\t', key, value)
+        end
+    end
+    --local _player = Entity:CreateEntity(x, y, "stickMan") -- 
+    local _player = Entity:CreateAnimatedEntity(x, y, frames) -- our new object
     setmetatable(_player, Player)
 
     _player.speed = 1
