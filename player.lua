@@ -2,16 +2,23 @@ Player = {}
 Player.__index = Player
 
 function Player:Init(x, y)
-    local frames = {
-        _G["animMan1"],
-        _G["animMan2"]
+    local framesDown = {
+        _G["playerDown1"],
+        _G["playerDown2"]
+    }
+    
+    local framesUp = {
+        _G["playerUp1"],
+        _G["playerUp2"]
     }
 
-    print(frames[1].width)
-
+    local framesSide = {
+        _G["playerSide1"],
+        _G["playerSide2"]
+    }
     
     --local _player = Entity:CreateEntity(x, y, "stickMan") -- 
-    local _player = Entity:CreateAnimatedEntity(x, y, frames, 400) -- our new object
+    local _player = Entity:CreateAnimatedEntity(x, y, framesDown, 400) -- our new object
     setmetatable(_player, Player)
 
     _player.speed = 1
@@ -21,8 +28,10 @@ function Player:Init(x, y)
     --   7     3
     --    6   4
     --      5    
-    _player.facing = 3 -- 3 faces right
-
+    _player.facing = 5 -- 5 faces down
+    _player.framesUp = framesUp
+    _player.framesDown = framesDown
+    _player.framesSide = framesSide
     return _player
 end
 
@@ -112,6 +121,28 @@ function Player:Update(timeDelta, pressedKeys)
     
     self.x = self.x + self.dx
     self.y = self.y + self.dy
+
+    if(self.facing == 1) then
+        self.frames = self.framesUp
+        self.flipH = false
+        self.flipV = false
+        --self.time = 400
+    elseif(self.facing == 2 or self.facing == 3 or self.facing == 4) then
+        self.frames = self.framesSide
+        self.flipH = false
+        self.flipV = false
+        --self.time = 400
+    elseif (self.facing == 5) then
+        self.frames = self.framesDown
+        self.flipH = false
+        self.flipV = false
+        --self.time = 400
+    elseif(self.facing == 6 or self.facing == 7 or self.facing == 8) then
+        self.frames = self.framesSide
+        self.flipH = true
+        self.flipV = false
+        --self.time = 400
+    end
 
     if(self.dx == 0 and self.dy == 0) then
         self.animate = false
